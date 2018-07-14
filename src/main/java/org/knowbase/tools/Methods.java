@@ -1,0 +1,99 @@
+package org.knowbase.tools;
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * Created on 7/12/18 by alexiy.
+ */
+public class Methods {
+
+    public static Path createFile(Path path, LinkOption... linkOptions)
+    {
+        if(!Files.exists(path,linkOptions))
+        {
+            if(path.getParent()!=null)
+            {
+                try {
+                    Files.createDirectories(path.getParent());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                path=Files.createFile(path);
+                return path;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return path;
+    }
+
+    public static List<String> readFile(Path path)
+    {
+        try {
+            return Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Path write(Path path,Iterable<? extends CharSequence> charSequences)
+    {
+        try {
+            return Files.write(path,charSequences);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Recursively retrieves all files from the specified path
+     * @param from supposed to be a directory
+     * @param list list to populate with files
+     * @return file list
+     */
+
+    public static List<Path> getFiles(Path from,List<Path> list)
+    {
+
+        try {
+            Stream<Path> pathStream=Files.list(from);
+            List<Path> paths=pathStream.collect(Collectors.toList());
+            paths.forEach(path -> {
+                if(Files.isDirectory(path,LinkOption.NOFOLLOW_LINKS))
+                {
+                    getFiles(path,list);
+                }
+                else{
+                    list.add(path);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static double getVisualTextWidth(String string)
+    {
+        Text text=new Text(string);
+        new Scene(new Group(text));
+        text.applyCss();
+        return text.getLayoutBounds().getWidth();
+    }
+}
