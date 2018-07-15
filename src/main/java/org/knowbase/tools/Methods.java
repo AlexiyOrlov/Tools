@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -95,5 +96,24 @@ public class Methods {
         new Scene(new Group(text));
         text.applyCss();
         return text.getLayoutBounds().getWidth();
+    }
+
+    /**
+     * Creates a map from strings in format [key:value]
+     */
+    public static HashMap<String,String> createMapFrom(String... strings)
+    {
+        HashMap<String,String> hashMap=new HashMap<>(strings.length);
+        for (String string : strings) {
+            if(string.contains(":"))
+            {
+                String[] pair=string.split(":");
+                if(pair.length==2)
+                {
+                    hashMap.put(pair[0],pair[1]);
+                }
+            }
+        }
+        return hashMap;
     }
 }
