@@ -1,2 +1,2 @@
 # Tools
-This project uses local Gradle distribution for building
+Various helpful things
