@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -115,5 +116,13 @@ public class Methods {
             }
         }
         return hashMap;
+    }
+
+    public static String removeAllCharactersFrom(String target, String... toRemove)
+    {
+        for (String s : toRemove) {
+            target=target.replaceAll(Pattern.quote(s),"");
+        }
+        return target;
     }
 }
