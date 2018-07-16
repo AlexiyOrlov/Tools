@@ -3,7 +3,6 @@ plugins{
 }
 version ='0.2'
 
-
 apply plugin: 'java'
 def bintrayCreds=file(projectDir.absolutePath+'/bintrayid.txt').readLines()
 allprojects {
@@ -27,7 +26,6 @@ bintray{
         name='tools'
         licenses=['Apache-2.0']
         vcsUrl='https://github.com/AlexiyOrlov/Tools'
-//        dryRun=true
         setPublications('tools')
     }
 }
