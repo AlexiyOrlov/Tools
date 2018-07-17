@@ -118,9 +118,15 @@ public class Methods {
         return hashMap;
     }
 
+    /**
+     * Removes given characters from given string. Any of the strings with length > 1 will be ignored
+     * @param toRemove array of characters in string form
+     */
     public static String removeAllCharactersFrom(String target, String... toRemove)
     {
         for (String s : toRemove) {
+            if(s.length()>1)
+                continue;
             target=target.replaceAll(Pattern.quote(s),"");
         }
         return target;
