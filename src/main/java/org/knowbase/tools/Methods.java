@@ -66,28 +66,30 @@ public class Methods {
 
     /**
      * Recursively retrieves all files from the specified path
-     * @param from supposed to be a directory
+     * @param from a directory
      * @param list list to populate with files
      * @return file list
      */
 
     public static List<Path> getFiles(Path from,List<Path> list)
     {
-
-        try {
-            Stream<Path> pathStream=Files.list(from);
-            List<Path> paths=pathStream.collect(Collectors.toList());
-            paths.forEach(path -> {
-                if(Files.isDirectory(path,LinkOption.NOFOLLOW_LINKS))
-                {
-                    getFiles(path,list);
-                }
-                else{
-                    list.add(path);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(Files.isDirectory(from)) {
+            try {
+                Stream<Path> pathStream = Files.list(from);
+                List<Path> paths = pathStream.collect(Collectors.toList());
+                paths.forEach(path -> {
+                    if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
+                        getFiles(path, list);
+                    } else {
+                        list.add(path);
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            throw new IllegalArgumentException(from+" is not a directory");
         }
         return list;
     }
