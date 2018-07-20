@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -46,7 +47,7 @@ public class Methods {
     public static List<String> readFile(Path path)
     {
         try {
-            return Files.readAllLines(path);
+            return Files.readAllLines(path,Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
         }
