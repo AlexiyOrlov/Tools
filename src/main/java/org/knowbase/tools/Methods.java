@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -82,7 +83,7 @@ public class Methods {
 
 
     /**
-     * Recursively deletes files
+     * Recursively deletes files and folders
      * @param path file or dir
      * @return true on success
      */
@@ -94,6 +95,17 @@ public class Methods {
             for (Path file : files) {
                 delete(file);
             }
+
+            List<Path> folders= getDirectories(path,new ArrayList<>());
+            Collections.reverse(folders);
+            folders.forEach(directory -> {
+                try {
+                    Files.deleteIfExists(directory);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
             try {
                 return Files.deleteIfExists(path);
             } catch (IOException e) {
@@ -126,6 +138,33 @@ public class Methods {
                 paths.forEach(path -> {
                     if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
                         getFiles(path, list);
+                    } else {
+                        list.add(path);
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            throw new IllegalArgumentException(from+" is not a directory");
+        }
+        return list;
+    }
+
+    /**
+     * Recursively gets all directories
+     */
+    public static List<Path> getDirectories(Path from, List<Path> list)
+    {
+        if(Files.isDirectory(from)) {
+            list.add(from);
+            try {
+                Stream<Path> pathStream = Files.list(from);
+                List<Path> paths = pathStream.collect(Collectors.toList());
+                paths.forEach(path -> {
+                    if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
+                        getDirectories(path, list);
                     } else {
                         list.add(path);
                     }
