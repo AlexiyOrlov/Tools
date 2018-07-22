@@ -6,6 +6,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -42,6 +43,21 @@ public class Methods {
         }
 
         return path;
+    }
+
+    public static Path copyFile(Path from, Path to, CopyOption... copyOptions)
+    {
+        try {
+            if(to.getParent()!=null)
+            {
+                Files.createDirectories(to.getParent());
+            }
+            Path result=Files.copy(from,to,copyOptions);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return from;
     }
 
     public static List<String> readFile(Path path)
