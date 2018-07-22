@@ -57,7 +57,7 @@ public class Methods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return from;
+        return to;
     }
 
     public static List<String> readFile(Path path)
@@ -78,6 +78,36 @@ public class Methods {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * Recursively deletes files
+     * @param path file or dir
+     * @return true on success
+     */
+    public static boolean delete(Path path)
+    {
+        if(Files.isDirectory(path))
+        {
+            List<Path> files=getFiles(path,new ArrayList<>());
+            for (Path file : files) {
+                delete(file);
+            }
+            try {
+                return Files.deleteIfExists(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            try {
+               return Files.deleteIfExists(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     /**
