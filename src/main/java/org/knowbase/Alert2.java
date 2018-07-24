@@ -11,7 +11,8 @@ public class Alert2 extends Alert {
 
 
     public Alert2(AlertType alertType, String contentText, ButtonType... buttons) {
-        super(alertType, contentText, buttons);
+        super(alertType, "", buttons);
+        setHeaderText(contentText);
         getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         setResizable(true);
     }
