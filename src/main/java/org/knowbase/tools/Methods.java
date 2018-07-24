@@ -46,6 +46,9 @@ public class Methods {
         return path;
     }
 
+    /**
+     * Copies the file, creating parent directories in the process
+     */
     public static Path copyFile(Path from, Path to, CopyOption... copyOptions)
     {
         try {
@@ -53,8 +56,7 @@ public class Methods {
             {
                 Files.createDirectories(to.getParent());
             }
-            Path result=Files.copy(from,to,copyOptions);
-            return result;
+            return Files.copy(from,to,copyOptions);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +121,7 @@ public class Methods {
                 e.printStackTrace();
             }
         }
-        return false;
+        return true;
     }
 
     /**
