@@ -221,4 +221,11 @@ public class Methods {
         }
         return target;
     }
+    
+    public static <I> List<I> newList(I... items)
+    {
+        ArrayList<I> arrayList=new ArrayList<>(items.length);
+        Collections.addAll(arrayList,items);
+        return arrayList;
+    }
 }
