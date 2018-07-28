@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created on 7/21/18 by alexiy.
+ * Doesn't allow duplicate elements. When a new element is added, first one is removed
  */
 public class FixedSizeList<T> extends ArrayList<T> {
 
