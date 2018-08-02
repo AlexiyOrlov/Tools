@@ -160,19 +160,21 @@ public class Methods {
     public static List<Path> getDirectories(Path from, List<Path> list)
     {
         if(Files.isDirectory(from)) {
-            list.add(from);
-            try {
-                Stream<Path> pathStream = Files.list(from);
-                List<Path> paths = pathStream.collect(Collectors.toList());
-                paths.forEach(path -> {
-                    if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
-                        getDirectories(path, list);
-                    } else {
-                        list.add(path);
-                    }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(Files.isReadable(from)) {
+                list.add(from);
+                try {
+                    Stream<Path> pathStream = Files.list(from);
+                    List<Path> paths = pathStream.collect(Collectors.toList());
+                    paths.forEach(path -> {
+                        if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
+                            getDirectories(path, list);
+                        } else {
+                            list.add(path);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         else{
