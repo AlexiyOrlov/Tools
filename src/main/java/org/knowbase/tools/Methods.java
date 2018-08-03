@@ -130,8 +130,7 @@ public class Methods {
      * @param list list to populate with files
      * @return file list
      */
-
-    public static List<Path> getFiles(Path from,List<Path> list)
+    public static List<Path> getFiles(Path from, List<Path> list)
     {
         if(Files.isDirectory(from)) {
             if(Files.isReadable(from)) {
