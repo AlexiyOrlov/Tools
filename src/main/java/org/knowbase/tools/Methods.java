@@ -87,41 +87,58 @@ public class Methods {
     /**
      * Recursively deletes files and folders
      * @param path file or dir
-     * @return true on success
+     * @param buffer
      */
-    public static boolean delete(Path path)
+    public static List<Path> delete(Path path, List<Path> buffer)
     {
         if(Files.isDirectory(path))
         {
             List<Path> files=getFiles(path,new ArrayList<>());
             for (Path file : files) {
-                delete(file);
+               List<Path> result= delete(file, buffer);
+               if(!result.isEmpty())
+               {
+                   return buffer;
+               }
             }
-
+            //TODO make sure the directories are empty
             List<Path> folders= getDirectories(path,new ArrayList<>());
             Collections.reverse(folders);
-            folders.forEach(directory -> {
+            for (Path directory : folders) {
                 try {
-                    Files.deleteIfExists(directory);
+                    if(Files.isWritable(directory)) {
+                        Files.deleteIfExists(directory);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return buffer;
                 }
-            });
+            }
 
             try {
-                return Files.deleteIfExists(path);
+                Files.deleteIfExists(path);
             } catch (IOException e) {
                 e.printStackTrace();
+                return buffer;
             }
         }
         else{
+            //delete file
             try {
-               return Files.deleteIfExists(path);
+                if(Files.isWritable(path))
+                {
+                    Files.deleteIfExists(path);
+                }
+                else{
+                    buffer.add(path);
+                }
+                return buffer;
             } catch (IOException e) {
                 e.printStackTrace();
+                return buffer;
             }
         }
-        return true;
+        return buffer;
     }
 
     /**
@@ -153,6 +170,7 @@ public class Methods {
         else{
             throw new IllegalArgumentException(from+" is not a directory");
         }
+
         return list;
     }
 
@@ -170,8 +188,6 @@ public class Methods {
                     paths.forEach(path -> {
                         if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
                             getDirectories(path, list);
-                        } else {
-                            list.add(path);
                         }
                     });
                 } catch (IOException e) {
