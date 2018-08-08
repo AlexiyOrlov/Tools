@@ -87,58 +87,48 @@ public class Methods {
     /**
      * Recursively deletes files and folders
      * @param path file or dir
-     * @param buffer
+     * @return true on success
      */
-    public static List<Path> delete(Path path, List<Path> buffer)
+    public static boolean delete(Path path)
     {
         if(Files.isDirectory(path))
         {
             List<Path> files=getFiles(path,new ArrayList<>());
             for (Path file : files) {
-               List<Path> result= delete(file, buffer);
-               if(!result.isEmpty())
-               {
-                   return buffer;
-               }
+                delete(file);
             }
-            //TODO make sure the directories are empty
+
             List<Path> folders= getDirectories(path,new ArrayList<>());
             Collections.reverse(folders);
             for (Path directory : folders) {
                 try {
-                    if(Files.isWritable(directory)) {
+                    if(Files.isWritable(directory))
                         Files.deleteIfExists(directory);
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return buffer;
+                    return false;
                 }
             }
 
             try {
-                Files.deleteIfExists(path);
+                return Files.deleteIfExists(path);
             } catch (IOException e) {
                 e.printStackTrace();
-                return buffer;
+                return false;
             }
         }
         else{
-            //delete file
             try {
                 if(Files.isWritable(path))
-                {
-                    Files.deleteIfExists(path);
-                }
-                else{
-                    buffer.add(path);
-                }
-                return buffer;
+                    return Files.deleteIfExists(path);
+                else
+                    return false;
             } catch (IOException e) {
                 e.printStackTrace();
-                return buffer;
+                return false;
             }
         }
-        return buffer;
+//        return true;
     }
 
     /**
@@ -170,7 +160,6 @@ public class Methods {
         else{
             throw new IllegalArgumentException(from+" is not a directory");
         }
-
         return list;
     }
 
