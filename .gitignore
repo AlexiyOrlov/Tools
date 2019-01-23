@@ -33,3 +33,5 @@ build
 svcs
 audio-player
 file-browser
+minecraft-server
+forge-server

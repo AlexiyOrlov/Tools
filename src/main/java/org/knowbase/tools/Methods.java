@@ -36,7 +36,7 @@ public class Methods {
                 }
             }
             try {
-                path=Files.createFile(path);
+                Files.createFile(path);
                 return path;
             } catch (IOException e) {
                 e.printStackTrace();
