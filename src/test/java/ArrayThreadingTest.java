@@ -35,10 +35,10 @@ public class ArrayThreadingTest {
     @Test
     public void threadedOperation()
     {
-        int[] ints=new int[new Random().nextInt(2000)+5000];
+        int[] ints=new int[new Random().nextInt(2000)+4000];
         System.out.println("Array size="+ints.length);
         Arrays.fill(ints,2);
-        int chunksize=1;
+        int chunksize;
         final int arraysize=ints.length;
         final int remainder=arraysize % cpuCores;
         if(remainder==0)
@@ -46,24 +46,27 @@ public class ArrayThreadingTest {
             chunksize=arraysize/cpuCores;
         }
         else{
-
             int in=arraysize-remainder;
             chunksize=in/cpuCores;
             System.out.println("Remainder="+remainder);
         }
-        System.out.println(chunksize);
-        System.out.println(cpuCores);
+        System.out.println("Chunk size="+chunksize);
+        System.out.println("Threads="+cpuCores);
         assert chunksize*cpuCores+remainder==arraysize;
         for (int core = 0; core < cpuCores; core++) {
             int start=core * chunksize;
-            int end;
-            if(core==cpuCores-1 && remainder==0)
-                end = start + chunksize;
-            else
-                end=start+chunksize+remainder;
+            int end = start + chunksize;
+            if(core==cpuCores-1)
+            {
+                if (remainder != 0) {
+                    end=start+chunksize+remainder;
+                }
+            }
+
             System.out.println("Start="+start+" end="+end);
+            int finalEnd = end;
             Thread thread=new Thread(() -> {
-                for (int i = start; i < end; i++) {
+                for (int i = start; i < finalEnd; i++) {
                     assert ints[i]==2;
 
                 }

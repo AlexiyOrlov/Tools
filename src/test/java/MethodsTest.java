@@ -2,12 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.knowbase.tools.Methods;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created on 7/15/18 by alexiy.
@@ -30,5 +25,16 @@ public class MethodsTest {
         String target="[pine]apple";
         String stripped=Methods.removeAllCharactersFrom(target,removables);
         Assert.assertEquals("pineapple", stripped);
+    }
+
+    @Test
+    public void testFunctionOnArray()
+    {
+        int[] array=new int[new Random().nextInt(64)];
+        Random random=new Random();
+        Methods.applyFunction(array, t -> t+random.nextInt(10));
+
+        Methods.applyConsumer(array, System.out::println);
+
     }
 }
