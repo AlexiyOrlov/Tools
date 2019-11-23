@@ -4,7 +4,7 @@ plugins{
 version ='0.4'
 
 apply plugin: 'java'
-def bintrayCreds=file(projectDir.absolutePath+'/bintrayid.txt').readLines()
+
 allprojects {
     group ='org.knowbase'
     sourceCompatibility = 1.8
@@ -18,15 +18,19 @@ allprojects {
     }
 }
 
+def bintrayCreds=file(projectDir.absolutePath+'/bintrayid.txt');
 bintray{
-    user= bintrayCreds.get(0)
-    key=bintrayCreds.get(1)
-    pkg{
-        repo='maven-repo'
-        name='tools'
-        licenses=['Apache-2.0']
-        vcsUrl='https://github.com/AlexiyOrlov/Tools'
-        setPublications('tools')
+    if(bintrayCreds.exists()) {
+        def content=bintrayCreds.readLines()
+        user = content.get(0)
+        key = content.get(1)
+        pkg {
+            repo = 'maven-repo'
+            name = 'tools'
+            licenses = ['Apache-2.0']
+            vcsUrl = 'https://github.com/AlexiyOrlov/Tools'
+            setPublications('tools')
+        }
     }
 }
 
