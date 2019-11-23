@@ -21,8 +21,13 @@ import java.util.stream.Stream;
 /**
  * Created on 7/12/18 by alexiy.
  */
+@SuppressWarnings("unused")
 public class Methods {
 
+    /**
+     * Creates a file and its parent directories from path
+     * @return null if the path couldn't be created or located, otherwise the path
+     */
     public static Path createFile(Path path, LinkOption... linkOptions)
     {
         if(!Files.exists(path,linkOptions))
@@ -42,8 +47,9 @@ public class Methods {
                 e.printStackTrace();
             }
         }
-
-        return path;
+        else
+            return path;
+        return null;
     }
 
     /**
@@ -128,7 +134,6 @@ public class Methods {
                 return false;
             }
         }
-//        return true;
     }
 
     /**
