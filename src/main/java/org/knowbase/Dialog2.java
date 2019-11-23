@@ -24,6 +24,9 @@ public class Dialog2<T,C extends Node> extends Dialog<T> {
             initModality(modality);
     }
 
+    /**
+     * Returns the dialog's content root, to which you can add new elements
+     */
     public C getContainer()
     {
         return (C) getDialogPane().getContent();
