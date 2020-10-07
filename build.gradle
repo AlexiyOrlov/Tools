@@ -9,7 +9,6 @@ apply plugin: 'maven-publish'
 allprojects {
     group ='org.knowbase'
     sourceCompatibility = 1.8
-//    apply plugin: 'maven-publish'
     repositories {
         jcenter()
         maven{
