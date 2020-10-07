@@ -76,7 +76,7 @@ public class Settings {
     public void save()
     {
         List<String> entries=new ArrayList<>(settings.size());
-        settings.forEach((s, s2) -> entries.add(s+"="+s2+System.lineSeparator()));
+        settings.forEach((s, s2) -> entries.add(s + "=" + s2));
         try {
             Files.write(storage,entries);
         } catch (IOException e) {
