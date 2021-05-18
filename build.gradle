@@ -1,11 +1,11 @@
 plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id 'java-library'
+    id 'maven-publish'
+    id 'maven'
 }
-apply plugin: 'java'
-apply plugin: 'maven-publish'
 apply plugin: 'signing'
-
 
 group ='dev.buildtool'
 archivesBaseName = 'tools'
@@ -26,23 +26,19 @@ javafx{
     version("11.0.2")
     modules = ['javafx.controls']
 }
-//task('sourceJar', type: Jar){
-//    classifier('sources')
-//    from sourceSets.main.allSource
-//}
-//
-//task javadocJar(type: Jar) {
-//    classifier('javadoc')
-//    from javadoc
-//}
-//
-//artifacts {
-//    archives(javadocJar, sourceJar)
-//}
-//
-//signing {
-//    sign configurations.archives
-//}
+task('sourceJar', type: Jar){
+    classifier('sources')
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier('javadoc')
+    from javadoc
+}
+
+artifacts {
+    archives(javadocJar, sourceJar)
+}
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -52,15 +48,37 @@ publishing {
     publications{
         javaPubl(MavenPublication){
             from components.java
+            artifactId 'tools' //correct
         }
     }
 }
+
+signing {
+
+    sign publishing.publications.javaPubl
+}
+
 
 nexusPublishing {
     repositories {
         sonatype{
             username=project.property("user")
             password=project.property("password")
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(
+                    url: "${nexusUrl}/content/repositories/releases") {
+                authentication(userName: "$user", password: "$password")
+            }
+            snapshotRepository(
+                    url: "${nexusUrl}/content/repositories/snapshots") {
+                authentication(userName: "$user", password: "$password")
+            }
         }
     }
 }
