@@ -1,4 +1,4 @@
-package org.knowbase;
+package dev.buildtool.tools.fx;
 
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;

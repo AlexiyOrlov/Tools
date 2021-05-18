@@ -1,4 +1,4 @@
-package org.knowbase.tools;
+package dev.buildtool.tools;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;

@@ -1,6 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.knowbase.tools.Methods;
+import dev.buildtool.tools.Methods;
 
 import java.util.*;
 

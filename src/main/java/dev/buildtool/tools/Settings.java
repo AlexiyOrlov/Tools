@@ -1,4 +1,4 @@
-package org.knowbase.tools;
+package dev.buildtool.tools;
 
 import java.io.IOException;
 import java.nio.file.Files;

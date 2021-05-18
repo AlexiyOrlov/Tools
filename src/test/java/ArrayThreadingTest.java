@@ -1,9 +1,7 @@
 import org.junit.Test;
-import org.knowbase.tools.Methods;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Spliterator;
 
 public class ArrayThreadingTest {
 

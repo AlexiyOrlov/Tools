@@ -1,4 +1,5 @@
-package org.knowbase;
+package dev.buildtool.tools.fx;
+
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -10,7 +11,7 @@ import javafx.scene.layout.Region;
 public class Alert2 extends Alert {
 
 
-    public Alert2(AlertType alertType, String contentText, ButtonType... buttons) {
+    public Alert2(Alert.AlertType alertType, String contentText, ButtonType... buttons) {
         super(alertType, "", buttons);
         setHeaderText(contentText);
         getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

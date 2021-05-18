@@ -1,5 +1,6 @@
 package org.knowbase;
 
+import dev.buildtool.tools.collections.FixedSizeList;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
