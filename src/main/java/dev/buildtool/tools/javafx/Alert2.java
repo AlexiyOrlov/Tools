@@ -1,4 +1,4 @@
-package dev.buildtool.tools.fx;
+package dev.buildtool.tools.javafx;
 
 
 import javafx.scene.control.Alert;
