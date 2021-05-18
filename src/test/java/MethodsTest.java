@@ -26,15 +26,4 @@ public class MethodsTest {
         String stripped=Methods.removeAllCharactersFrom(target,removables);
         Assert.assertEquals("pineapple", stripped);
     }
-
-    @Test
-    public void testFunctionOnArray()
-    {
-        int[] array=new int[new Random().nextInt(64)];
-        Random random=new Random();
-        Methods.applyFunction(array, t -> t+random.nextInt(10));
-
-        Methods.applyConsumer(array, System.out::println);
-
-    }
 }
