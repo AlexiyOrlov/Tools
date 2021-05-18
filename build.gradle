@@ -9,7 +9,7 @@ apply plugin: 'signing'
 
 group ='dev.buildtool'
 archivesBaseName = 'tools'
-version("0.1.0")
+version("0.1.1")
 
 sourceCompatibility=JavaVersion.VERSION_11
 targetCompatibility=JavaVersion.VERSION_11
@@ -36,6 +36,7 @@ task javadocJar(type: Jar) {
     from javadoc
 }
 
+//redundant?
 artifacts {
     archives(javadocJar, sourceJar)
 }
@@ -48,13 +49,36 @@ publishing {
     publications{
         javaPubl(MavenPublication){
             from components.java
+            artifact sourceJar
+            artifact javadocJar
             artifactId 'tools' //correct
+            pom {
+                name= "Alexey Orlov"
+                description="Various helpful things"
+                url = "https://github.com/AlexiyOrlov/Tools"
+                licenses{
+                    license{
+                        name ="Apache license 2.0"
+                        url="https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers{
+                    developer{
+                        name="Alexey Orlov"
+                        email="alexiy.ov@gmail.com"
+                    }
+                }
+                scm{
+                    connection ="scm:git:http://github.com/AlexiyOrlov/Tools"
+                    developerConnection ="scm:git:https://github.com/AlexiyOrlov/Tools"
+                    url= "https://github.com/AlexiyOrlov/Tools"
+                }
+            }
         }
     }
 }
 
 signing {
-
     sign publishing.publications.javaPubl
 }
 
